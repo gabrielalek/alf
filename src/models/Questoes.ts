@@ -25,8 +25,14 @@ class Questao {
   @ManyToOne(() => Prova, prova => prova.questoes)
   prova: Prova;
 
+  @Column()
+  provaId: string;
+
   @ManyToOne(() => Gabarito, gabarito => gabarito.questoes)
   gabarito: Gabarito;
+
+  @Column()
+  gabaritoId: string;
 
   @OneToMany(() => Resposta, resposta => resposta.questao)
   respostas: Resposta[];
