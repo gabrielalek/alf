@@ -18,6 +18,9 @@ class Aluno {
   @Column()
   name: string;
 
+  @Column()
+  nota: number;
+
   @OneToMany(() => Gabarito, gabarito => gabarito.aluno)
   gabaritos: Gabarito[];
 

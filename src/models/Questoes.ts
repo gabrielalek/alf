@@ -17,7 +17,7 @@ class Questao {
   id: string;
 
   @Column()
-  peso: string;
+  peso: number;
 
   @Column()
   acerto: string;

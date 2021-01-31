@@ -24,6 +24,44 @@ export const inicializarGabaritos = (routes: Router): void => {
 
     return response.json(gabarito);
   });
+
+  routes.put('/gabaritos/:id', (request, response) => {
+    const { id } = request.params;
+
+    const alunoExiste = alunos.find(x => x.id === request.body.alunoId);
+
+    if (!alunoExiste) return response.json({ erro: 'Aluno não existe' });
+
+    const gabaritoIndex = gabaritos.findIndex(gabarito => gabarito.id === id);
+
+    if (gabaritoIndex < 0) {
+      return response.status(400).json({ error: 'Gabarito não encontrado.' });
+    }
+
+    let gabarito = new Gabarito();
+
+    gabarito = request.body;
+
+    gabarito.id = id;
+
+    gabaritos[gabaritoIndex] = gabarito;
+
+    return response.json(gabarito);
+  });
+
+  routes.delete('/gabaritos/:id', (request, response) => {
+    const { id } = request.params;
+
+    const gabaritoIndex = gabaritos.findIndex(gabarito => gabarito.id === id);
+
+    if (gabaritoIndex < 0) {
+      return response.status(400).json({ error: 'Gabarito não encontrado.' });
+    }
+
+    gabaritos.splice(gabaritoIndex, 1);
+
+    return response.json({ id });
+  });
 };
 
 export default gabaritos;
