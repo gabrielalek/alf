@@ -12,7 +12,7 @@ import Gabarito from './Gabaritos';
 import Questao from './Questoes';
 import Resposta from './Respostas';
 
-@Entity('provass')
+@Entity('provas')
 class Prova {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -32,8 +32,14 @@ class Prova {
   @ManyToOne(() => Gabarito, gabarito => gabarito.provas)
   gabarito: Gabarito;
 
+  @Column()
+  gabaritoId: string;
+
   @ManyToOne(() => Aluno, aluno => aluno.provas)
   aluno: Aluno;
+
+  @Column()
+  alunoId: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -43,3 +49,5 @@ class Prova {
 }
 
 export default Prova;
+
+// class Gabarito extends Prova,

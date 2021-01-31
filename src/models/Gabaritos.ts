@@ -5,6 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  Column,
 } from 'typeorm';
 import Aluno from './Alunos';
 import Prova from './Provas';
@@ -27,6 +28,9 @@ class Gabarito {
 
   @ManyToOne(() => Aluno, aluno => aluno.gabaritos)
   aluno: Aluno;
+
+  @Column()
+  alunoId: string;
 
   @CreateDateColumn()
   created_at: Date;
