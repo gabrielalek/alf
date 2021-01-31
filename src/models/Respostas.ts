@@ -22,6 +22,9 @@ class Resposta {
   @Column()
   gabaritoId: string;
 
+  @Column()
+  acerto: string;
+
   @ManyToOne(() => Prova, prova => prova.respostas)
   prova: Prova;
 

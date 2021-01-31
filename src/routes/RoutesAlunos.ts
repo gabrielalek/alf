@@ -10,6 +10,9 @@ export const inicializarAlunos = (routes: Router): void => {
   });
 
   routes.post('/alunos', (request, response) => {
+    if (alunos.length >= 100) {
+      return response.status(400).json({ error: 'Limite de alunos atingido.' });
+    }
     let aluno = new Aluno();
 
     aluno = request.body;
@@ -22,34 +25,40 @@ export const inicializarAlunos = (routes: Router): void => {
 
   routes.put('/alunos/:id', (request, response) => {
     const { id } = request.params;
-    const {
-      name,
-      gabaritos,
-      respostas,
-      provas,
-      created_at,
-      updated_at,
-    } = request.body;
 
-    const alunoIndex = alunos.findIndex(project => project.id === id);
+    const alunoIndex = alunos.findIndex(aluno => aluno.id === id);
 
     if (alunoIndex < 0) {
       return response.status(400).json({ error: 'Aluno não encontrado.' });
     }
 
-    const aluno = {
-      id,
-      name,
-      gabaritos,
-      respostas,
-      provas,
-      created_at,
-      updated_at,
-    };
+    let aluno = new Aluno();
+
+    aluno = request.body;
+
+    aluno.id = id;
 
     alunos[alunoIndex] = aluno;
 
     return response.json(aluno);
+  });
+
+  routes.delete('/alunos/:id', (request, response) => {
+    const { id } = request.params;
+
+    const alunoIndex = alunos.findIndex(aluno => aluno.id === id);
+
+    if (alunoIndex < 0) {
+      return response.status(400).json({ error: 'Aluno não encontrado.' });
+    }
+
+    alunos.splice(alunoIndex, 1);
+
+    return response.json({ id });
+  });
+
+  routes.get('/alunosAprovados', (request, response) => {
+    return response.json(alunos.filter(x => x.nota >= 7));
   });
 };
 

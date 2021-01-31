@@ -18,7 +18,7 @@ class Prova {
   id: string;
 
   @Column()
-  nota: string;
+  nota: number;
 
   @Column()
   materia: string;
